@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee.net</title>
+</head>
+
+<body>
+//App will go to this <div>
+<div id="content"></div>
+
+//Render React into a DOM
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+
+//Enable JSX and ES6
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+//Enable transpilation from ES6 to ES5
+<script type="text/babel">
+
+//Data as if taken from some API
+var DATA = {
+  name: 'Oleg Ivanov',
+  imgURL: 'http://lorempixel.com/400/200/',
+  dutyList: ['refactoring', 'testing', 'reporting']
+}
+
+//Child component 
+var Employee = React.createClass({
+  render: function(){
+    return(
+      <div>
+      <h2>{this.props.name}<h2>
+      <img src = {this.props.imgURL}/>
+      </div>
+    );
+  }
+});
+
+//Child component 
+var Duties = React.createClass({
+  render: function(){
+    var duties = this.props.dutyList.map(function(duty, index){
+    return(<li>key={index}>{duty}</li>
+    });
+    
+    return(
+      <div>
+      <h5>My duties:</h5>
+      <ul>
+      {duties}
+      </ul>
+      </div>
+    );
+  }
+});
+
+//Parent component
+var App = React.createClass({
+ render: function(){
+    return(
+     <div>
+      <Employee
+      name={this.props.employeeData.name}
+      imgURL={this.props.employeeData.imgURL} />
+      <Duties
+      dutyList={this.props.emloyeeData.dutyList} />
+     </div>
+  );
+ }
+});
+
+ReactDOM.render(<App employeeData{DATA} />, document.getElementByID('content'));
+
+</script>
+</body>
+</html>
